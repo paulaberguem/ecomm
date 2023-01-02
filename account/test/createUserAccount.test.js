@@ -1,4 +1,4 @@
-import { createUserUseCase } from "../src/use-case/createUserAccount";
+import {createUserUseCase} from "../src/use-case/createUserAccount.js";
 
 const users = [
     {
