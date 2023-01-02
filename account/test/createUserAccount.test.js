@@ -1,6 +1,6 @@
 import { createUserUseCase } from "../src/use-case/createUserAccount";
 
-const list = [
+const users = [
     {
         name: 'Maria Silva',
         email: 'maria@email.com',
@@ -13,6 +13,6 @@ const list = [
     }
 ];
 
-list.map(item => {
-    console.log(createUserUseCase(item))
+users.map(user => {
+    console.log(createUserUseCase(user))
 });
