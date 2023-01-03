@@ -1,4 +1,4 @@
-import {createUserUseCase} from "../src/use-case/createUserAccount.js";
+import {createUserUseCase, accounts} from "../src/use-case/createUserAccount.js";
 
 const users = [
     {
@@ -16,3 +16,5 @@ const users = [
 users.map(user => {
     console.log(createUserUseCase(user))
 });
+
+console.log(accounts);
