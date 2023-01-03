@@ -2,4 +2,4 @@ import { searchUserAccountByEmailUseCase } from "../src/use-case/searchUserAccou
 
 const searchEmail = 'tom@email.com';
 
-console.log(searchUserAccountByEmailUseCase(searchEmail))
+console.log(searchUserAccountByEmailUseCase(searchEmail));

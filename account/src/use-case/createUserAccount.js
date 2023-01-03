@@ -24,7 +24,7 @@ function createUserUseCase(user){
         createdDate: new Date()
     };
     accounts.push(userCreate);
-    return userCreate
+    return userCreate;
 }
 
-export { createUserUseCase, accounts };
+export { createUserUseCase, accounts }

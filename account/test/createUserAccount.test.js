@@ -14,7 +14,7 @@ const users = [
 ];
 
 users.map(user => {
-    console.log(createUserUseCase(user))
+    console.log(createUserUseCase(user));
 });
 
 console.log(accounts);
