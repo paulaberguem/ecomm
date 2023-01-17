@@ -1,0 +1,15 @@
+use('ecomm-product');
+
+db.products.find({}).forEach(product => {
+  const category = db.categories.findOne({nome: product.categoria})
+
+  if (category.status){
+    product.categoria = {
+      nome: category.nome,
+      id: category._id
+    }
+  }
+  
+  db.products.replaceOne({_id: product._id}, product)
+
+})
