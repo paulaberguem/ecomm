@@ -1,8 +1,8 @@
 use('ecomm-product');
 
 db.products.find({$or: [
-    {'categoria': 'LIVROS'},
-    {'categoria': 'CELULARES'}
+    {'categoria': 'livros'},
+    {'categoria': 'celulares'}
   ]},
   {'nome': 1}
 );

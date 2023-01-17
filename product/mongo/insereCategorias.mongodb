@@ -2,12 +2,12 @@ use('ecomm-product');
 db.createCollection('categories');
 
 db.categories.insertMany([
-  {'nome': 'informática', 'status': 'ativa'},
-  {'nome': 'beleza', 'status': 'inativa'},
-  {'nome': 'celulares', 'status': 'ativa'},
-  {'nome': 'móveis', 'status': 'ativa'},
-  {'nome': 'luxo', 'status': 'inativa'},
-  {'nome': 'esporte', 'status': 'inativa'},
-  {'nome': 'automotiva', 'status': 'ativa'},
-  {'nome': 'livros', 'status': 'ativa'}
+  {'nome': 'informática', 'status': true},
+  {'nome': 'beleza', 'status': false},
+  {'nome': 'celulares', 'status': true},
+  {'nome': 'móveis', 'status': true},
+  {'nome': 'luxo', 'status': false},
+  {'nome': 'esporte', 'status': false},
+  {'nome': 'automotiva', 'status': true},
+  {'nome': 'livros', 'status': true}
 ]);
