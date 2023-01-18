@@ -1,0 +1,58 @@
+use('ecomm-order');
+db.createCollection('orders');
+
+db.orders.insertMany([
+    {
+        "dataPedido": new ISODate(),
+        "cliente": {
+            id: "63c801aa2cf2bf8edcb041b9",
+            "nome": "Arya Stark"
+        },
+        "enderecoEntrega": {
+            "logradouro": "Travessa da Agua Preta",
+            "numero": "s/n",
+            "complemento": "casa verde",
+            "cep": 28010150,
+            "cidade": "Betim",
+            "estado": "Minas Gerais"
+        },
+        "itensPedido": [
+            {
+                "produto": "Clean Architecture",
+                "quantidade": 1,
+                "desconto": NumberDecimal(12.9),
+                "precoUnitario": NumberDecimal(102.9)
+            },
+            {
+                "produto": "Monitor Dell 27",
+                "quantidade": 1,
+                "desconto": NumberDecimal(0),
+                "precoUnitario": NumberDecimal(1889)
+            }
+        ]
+    },
+    {
+        "dataPedido": new ISODate(),
+        "cliente": {
+            "id": "63c801aa2cf2bf8edcb041b8",
+            "nome": "Daenerys Targaryen"
+        },
+        "enderecoEntrega": {
+            "logradouro": "Avenida Brasil",
+            "numero": "123",
+            "complemento": "apartamento 25",
+            "cep": 44080003,
+            "cidade": "Rio de Janeiro",
+            "estado": "Rio de Janeiro"
+        },
+        "itensPedido": [
+            {
+                "produto": "Implementing Domain-Driven Design",
+                "quantidade": 2,
+                "desconto": NumberDecimal(44.07),
+                "precoUnitario": NumberDecimal(144.07)
+            }
+        ]
+    }
+
+])
