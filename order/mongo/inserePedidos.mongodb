@@ -20,14 +20,14 @@ db.orders.insertMany([
             {
                 "produto": "Clean Architecture",
                 "quantidade": 1,
-                "desconto": NumberDecimal(12.9),
-                "precoUnitario": NumberDecimal(102.9)
+                "desconto": NumberDecimal("12.9"),
+                "precoUnitario": NumberDecimal("102.9")
             },
             {
                 "produto": "Monitor Dell 27",
                 "quantidade": 1,
-                "desconto": NumberDecimal(0),
-                "precoUnitario": NumberDecimal(1889)
+                "desconto": NumberDecimal("0"),
+                "precoUnitario": NumberDecimal("1889")
             }
         ]
     },
@@ -49,8 +49,8 @@ db.orders.insertMany([
             {
                 "produto": "Implementing Domain-Driven Design",
                 "quantidade": 2,
-                "desconto": NumberDecimal(44.07),
-                "precoUnitario": NumberDecimal(144.07)
+                "desconto": NumberDecimal("44.07"),
+                "precoUnitario": NumberDecimal("144.07")
             }
         ]
     }
