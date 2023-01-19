@@ -1,0 +1,12 @@
+use('ecomm-product');
+
+const quantidadePedida = 2;
+
+const verificaEstoque = db.products.findOne({"nome": "Galaxy Tab S8"});
+
+if (verificaEstoque.estoque >= quantidadePedida){
+    db.products.updateOne(
+        {"nome": "Galaxy Tab S8"}, 
+        {$inc: {"estoque": -quantidadePedida}}
+    );
+}
