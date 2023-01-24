@@ -7,13 +7,13 @@ db.users.insertMany([
 		"email": "jon@email.com",
 		"senha": "394104b42fd4aedff59d769a84b7c185a4832aba",
 		"dataCriacaoUsuario": new ISODate(),
-		"cpf": 12332178905,
-		"telefone": "(73)7686-5245",
+		"cpf": "12332178905",
+		"telefone": "7376865245",
 		"endereco": {
             "logradouro": "Avenida da Muralha",
             "numero": "2222",
             "complemento": "Vila do Corvo, apt 555",
-            "cep": 42450220,
+            "cep": "42450220",
             "cidade": "Ilhéus",
             "estado": "Bahia"
         }
@@ -23,13 +23,13 @@ db.users.insertMany([
 		"email": "dragon@email.com",
 		"senha": "14c15724df77813447602e7a4758a9faab155a3d",
 		"dataCriacaoUsuario": new ISODate(),
-		"cpf": 98778912365,
-		"telefone": "(24)0570-6824",
+		"cpf": "98778912365",
+		"telefone": "2405706824",
 		"endereco": {
             "logradouro": "Rua do Telegrafo",
             "numero": "350",
             "complemento": "apt 201",
-            "cep": 45810000,
+            "cep": "45810000",
             "cidade": "Porto Seguro",
             "estado": "Bahia"
         }
@@ -39,13 +39,13 @@ db.users.insertMany([
 		"email": "arya@email.com",
 		"senha": "152acfcdc087d96a8f0a2054d95332b0a920f0e0",
 		"dataCriacaoUsuario": new ISODate(),
-		"cpf": 45665412378,
-		"telefone": "(38)0524-7869",
+		"cpf": "45665412378",
+		"telefone": "3055247869",
 		"endereco": {
             "logradouro": "Travessa da Agua Preta",
             "numero": "s/n",
             "complemento": "casa verde",
-            "cep": 28010150,
+            "cep": "28010150",
             "cidade": "Betim",
             "estado": "Minas Gerais"
         }
