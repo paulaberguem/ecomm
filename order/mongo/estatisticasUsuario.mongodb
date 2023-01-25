@@ -1,0 +1,28 @@
+use('ecomm-order');
+
+db.orders.aggregate([
+    {
+        $match: {"cliente.idCliente": ObjectId("63c801aa2cf2bf8edcb041b9")
+}
+    },{
+        $unwind: "$itensPedido"
+    }, {
+        $addFields: {
+            totalBruto: {$multiply: ["$itensPedido.quantidade", "$itensPedido.precoUnitario"]},
+            totalDesconto: {$multiply: ["$itensPedido.quantidade","$itensPedido.desconto"]}
+        }
+    }, {
+        $group: {
+            _id: "$_id",
+            quantidadeItensPedidos: {$push: "$itensPedido.quantidade"},
+            totalBruto: {$push: "$totalBruto"},
+            totalDesconto: {$push: "$totalDesconto"}
+        }
+    },{
+        $project: {
+            quantidadeItensPedidos: {$sum: "$quantidadeItensPedidos"},
+            montanteTotalBruto: {$sum: "$totalBruto"},
+            montanteTotalDesconto: {$sum: "$totalDesconto"}
+        }
+    }
+])
