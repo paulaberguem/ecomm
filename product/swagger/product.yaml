@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: API de ECOMM
+  description: "API para um ecommerce que é baseado no Mercado Livre ou semelhantes que será um projeto construído em partes, ou seja, teremos alguns projetos que se conectam e em conjunto, fazem o Ecomm funcionar."
+  version: 0.0.1
+  termsOfService: https://alura.com.br
+  contact:
+    name: Suporte a Dev
+    email: paula@example.com
+    url: https://github.com/paulaberguem/ecomm
+  license:
+    name: Alura
+    url: https://alura.com.br
+externalDocs:
+  description: Documentação do trello
+  url: https://trello.com/b/tu2nh5N3/semana-5-alura
+servers:
+- url: https://teste.com
+  description: API - ecomm
+paths:
+  /categories:
+    get:
+      tags:
+        - categorias
+      summary: Recupera todas as categorias
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categorias" 
+        204:
+          description: Sem conteúdo
+          content:
+            application/json:
+              example: "No content found in Categories" 
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/Categories:
+    post:
+      tags:
+        - admin
+      summary: Cadastro de novas categorias
+      description: "apenas admin pode ter acesso a esse endpoint"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             properties:
+              nome:
+               type: string
+      responses:
+        201: 
+          description: Criado com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/categoria"
+        401:
+          description: Accesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+security: 
+- auth: []
+components:
+  schemas:
+    categoria:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        status:
+          type: boolean 
+    categorias:
+      type: array
+      items:
+        $ref: "#/components/schemas/categorias"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
