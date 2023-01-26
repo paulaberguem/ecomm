@@ -40,11 +40,11 @@ paths:
           content:
             application/json:
               example: "Not Found :("
-  /admin/Categories:
+  /admin/categories:
     post:
       tags:
         - admin
-      summary: Cadastro de novas categorias
+      summary: Cadastra novas categorias
       description: Apenas admin pode ter acesso a esse endpoint
       requestBody:
         required: true
@@ -95,7 +95,75 @@ paths:
           content:
             application/json:
               example: "Not Found :("
-    
+  /admin/categories/{id}:
+    parameters: 
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+    put:
+      tags:
+      - admin
+      summary: Altera dados de uma determinada categoria
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/categoria'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    delete:
+      tags:
+      - admin
+      summary: Exclui determinada categoria
+      responses: 
+        200:
+          description: Excluído com sucesso
+          content:
+            aplication/json:
+              example: "Deleted"
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    patch:
+      tags:
+      - admin
+      summary: Altera o status de uma categoria
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/categoria'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
 security: 
 - auth: []
 components:
