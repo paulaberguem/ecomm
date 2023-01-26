@@ -1,0 +1,528 @@
+openapi: 3.0.3
+info:
+  title: API de ECOMM
+  description: "API para um ecommerce que é baseado no Mercado Livre ou semelhantes que será um projeto construído em partes, ou seja, teremos alguns projetos que se conectam e em conjunto, fazem o Ecomm funcionar."
+  version: 0.0.1
+  termsOfService: https://alura.com.br
+  contact:
+    name: Suporte a Dev
+    email: paula@example.com
+    url: https://github.com/paulaberguem/ecomm
+  license:
+    name: Alura
+    url: https://alura.com.br
+externalDocs:
+  description: Documentação do trello
+  url: https://trello.com/b/tu2nh5N3/semana-5-alura
+servers:
+- url: https://teste.com
+  description: API - ecomm
+paths:
+  /categories:
+    get:
+      tags:
+        - categorias
+      summary: Recupera todas as categorias
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categorias" 
+        204:
+          description: Sem conteúdo
+          content:
+            application/json:
+              example: "No content found in Categories" 
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /categories/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - categorias
+      summary: Recupera uma categoria pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/categoria"
+        404:
+          description: Categoria não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /products:
+    get:
+      tags:
+        - produtos
+      summary: Recupera todos os produtos
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/produtos" 
+        204:
+          description: Sem conteúdo
+          content:
+            application/json:
+              example: "No content found in Products" 
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /products/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - produtos
+      summary: Recupera um produto pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/produto"
+        404:
+          description: Produto não encontrado
+          content:
+            application/json:
+              example: "Not Found :("
+  /users:
+    get:
+      tags:
+        - usuarios
+      summary: Recupera todos os usuários
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usuarios" 
+        204:
+          description: Sem conteúdo
+          content:
+            application/json:
+              example: "No content found in Products" 
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - usuarios
+      summary: Recupera um usuário pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/respostaUsuario"
+        404:
+          description: Usuário não encontrado
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/categories:
+    post:
+      tags:
+        - admin
+      summary: Cadastra nova categoria
+      description: Apenas admin pode ter acesso a esse endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             properties:
+              nome:
+               type: string
+      responses:
+        201: 
+          description: Categoria criada com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/categoria"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/categories/{id}:
+    parameters: 
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+    put:
+      tags:
+      - admin
+      summary: Altera dados de uma determinada categoria
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/categoria'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    delete:
+      tags:
+      - admin
+      summary: Exclui determinada categoria
+      responses: 
+        200:
+          description: Excluído com sucesso
+          content:
+            aplication/json:
+              example: "Deleted"
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    patch:
+      tags:
+      - admin
+      summary: Altera o status de uma categoria
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/categoria'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/products:
+    post:
+      tags:
+        - admin
+      summary: Cadastra novo produto
+      description: Apenas admin pode ter acesso a esse endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             properties:
+              nome:
+                type: string
+              descricao:
+                type: string
+              slug:
+                type: string
+              precoUnitario:
+                type: number
+              estoque:
+                type: integer
+              categoria:
+                type: string
+      responses:
+        201: 
+          description: Produto cadastrado com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/produto"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/products/{id}:
+    parameters: 
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+    put:
+      tags:
+      - admin
+      summary: Altera dados de um determinado produto
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/produto'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    delete:
+      tags:
+      - admin
+      summary: Exclui determinado produto
+      responses: 
+        200:
+          description: Excluído com sucesso
+          content:
+            aplication/json:
+              example: "Deleted"
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/users:
+    post:
+      tags:
+        - admin
+      summary: Cadastra novo usuário
+      description: Apenas admin pode ter acesso a esse endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/insereUsuario"
+      responses:
+        201: 
+          description: Usuário criado com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/respostaUsuario"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/users/{id}:
+    parameters: 
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+    put:
+      tags:
+      - admin
+      summary: Altera dados de um determinado usuário
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/insereUsuario'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    delete:
+      tags:
+      - admin
+      summary: Exclui determinado usuário
+      responses: 
+        200:
+          description: Excluído com sucesso
+          content:
+            aplication/json:
+              example: "Deleted"
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+security: 
+- auth: []
+components:
+  schemas:
+    categoria:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        status:
+          type: boolean 
+    categorias:
+      type: array
+      items:
+        $ref: "#/components/schemas/categoria"
+    produto:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        descricao:
+          type: string
+        slug:
+          type: string
+        precoUnitario:
+          type: number
+        estoque:
+          type: integer
+        categoria:
+          type: string
+    produtos:
+      type: array
+      items:
+        $ref: "#/components/schemas/produto"
+    insereUsuario:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        endereco:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+    respostaUsuario:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        endereco:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+    usuarios:
+      type: array
+      items:
+        $ref: "#/components/schemas/respostaUsuario"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
