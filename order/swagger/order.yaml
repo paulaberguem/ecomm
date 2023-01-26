@@ -153,6 +153,62 @@ paths:
           content:
             application/json:
               example: "Not Found :("
+  /orders:
+    post:
+      tags:
+        - pedidos
+      summary: Cadastra novo pedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: "#/components/schemas/inserePedido"
+      responses:
+        201: 
+          description: Categoria criada com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/respostaPedido"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /orders/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - pedidos
+      summary: Recupera um pedido pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/respostaPedido"
+        403:
+          description: Usuário não pode acessar determinado pedido
+          content:
+            application/json:
+              example: "Forbidden"
+        404:
+          description: Pedido não encontrado
+          content:
+            application/json:
+              example: "Not Found :("
   /admin/categories:
     post:
       tags:
@@ -521,6 +577,79 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/respostaUsuario"
+    itemPedido:
+      type: object
+      properties:
+        idProduto:
+          type: string
+        nome:
+          type: string
+        quantidade:
+          type: integer
+        desconto:
+          type: number
+        precoUnitario:
+          type: number
+    inserePedido:
+      type: object
+      properties:
+        cliente:
+          type: object
+          properties:
+            idCliente:
+              type: string
+            nome:
+              type: string
+        enderecoEntrega:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+        itensPedido:
+          type: array
+          items: 
+            $ref: "#/components/schemas/itemPedido"
+    respostaPedido:
+      type: object
+      properties:
+        id:
+          type: string
+        cliente:
+          type: object
+          properties:
+            idCliente:
+              type: string
+            nome:
+              type: string
+        enderecoEntrega:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+        itensPedido:
+          type: array
+          items: 
+            $ref: "#/components/schemas/itemPedido"
   securitySchemes:
     auth:
       type: http
