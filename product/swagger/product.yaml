@@ -44,7 +44,7 @@ paths:
     post:
       tags:
         - admin
-      summary: Cadastra novas categorias
+      summary: Cadastra nova categoria
       description: Apenas admin pode ter acesso a esse endpoint
       requestBody:
         required: true
@@ -164,6 +164,141 @@ paths:
           content:
             application/json:
               example: "Not Found :("
+  /admin/products:
+    post:
+      tags:
+        - admin
+      summary: Cadastra novo produto
+      description: Apenas admin pode ter acesso a esse endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             type: object
+             properties:
+              nome:
+                type: string
+              descricao:
+                type: string
+              slug:
+                type: string
+              precoUnitario:
+                type: number
+              estoque:
+                type: integer
+              categoria:
+                type: string
+      responses:
+        201: 
+          description: Produto cadastrado com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/produto"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /products:
+    get:
+      tags:
+        - produtos
+      summary: Recupera todos os produtos
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/produtos" 
+        204:
+          description: Sem conteúdo
+          content:
+            application/json:
+              example: "No content found in Products" 
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+  /products/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - produtos
+      summary: Recupera um produto pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/produto"
+        404:
+          description: Produto não encontrado
+          content:
+            application/json:
+              example: "Not Found :("
+  /admin/products/{id}:
+    parameters: 
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+    put:
+      tags:
+      - admin
+      summary: Altera dados de um determinado produto
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/produto'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    delete:
+      tags:
+      - admin
+      summary: Exclui determinado produto
+      responses: 
+        200:
+          description: Excluído com sucesso
+          content:
+            aplication/json:
+              example: "Deleted"
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
 security: 
 - auth: []
 components:
@@ -180,7 +315,28 @@ components:
     categorias:
       type: array
       items:
-        $ref: "#/components/schemas/categorias"
+        $ref: "#/components/schemas/categoria"
+    produto:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        descricao:
+          type: string
+        slug:
+          type: string
+        precoUnitario:
+          type: number
+        estoque:
+          type: integer
+        categoria:
+          type: string
+    produtos:
+      type: array
+      items:
+        $ref: "#/components/schemas/produto"
   securitySchemes:
     auth:
       type: http
