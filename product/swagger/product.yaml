@@ -45,7 +45,7 @@ paths:
       tags:
         - admin
       summary: Cadastro de novas categorias
-      description: "apenas admin pode ter acesso a esse endpoint"
+      description: Apenas admin pode ter acesso a esse endpoint
       requestBody:
         required: true
         content:
@@ -57,13 +57,13 @@ paths:
                type: string
       responses:
         201: 
-          description: Criado com sucesso
+          description: Categoria criada com sucesso
           content:
            application/json:
             schema:
              $ref: "#/components/schemas/categoria"
         401:
-          description: Accesso Negado
+          description: Acesso Negado
           content:
             application/json:
               example: "Unauthorized"
@@ -72,6 +72,30 @@ paths:
           content:
             application/json:
               example: "Not Found :("
+  /categories/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - categorias
+      summary: Recupera uma categoria pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/categoria"
+        404:
+          description: Categoria não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+    
 security: 
 - auth: []
 components:
