@@ -1,0 +1,328 @@
+openapi: 3.0.3
+info:
+  title: API de Contas e Pedidos
+  description: "API para um ecommerce que é baseado no Mercado Livre ou semelhantes que será um projeto construído em partes, ou seja, teremos alguns projetos que se conectam e em conjunto, fazem o Ecomm funcionar."
+  version: 0.0.1
+  termsOfService: https://alura.com.br
+  contact:
+    name: Suporte a Dev
+    email: paula@example.com
+    url: https://github.com/paulaberguem/ecomm
+  license:
+    name: Alura
+    url: https://alura.com.br
+externalDocs:
+  description: Documentação do trello
+  url: https://trello.com/b/tu2nh5N3/semana-5-alura
+servers:
+- url: https://teste.com
+  description: API - ecomm
+paths:
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - usuarios
+      summary: Recupera um usuário pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/usuarioResposta"
+        404:
+          description: Usuário não encontrado
+          content:
+            application/json:
+              example: "Not Found :("
+      security:
+        - auth: []
+  /orders:
+    post:
+      tags:
+        - pedidos
+      summary: Cadastra novo pedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: "#/components/schemas/pedidoInsercao"
+      responses:
+        201: 
+          description: Categoria criada com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/pedidoResposta"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+      security:
+        - auth: []
+  /orders/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - pedidos
+      summary: Recupera um pedido pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/pedidoResposta"
+        403:
+          description: Usuário não pode acessar determinado pedido
+          content:
+            application/json:
+              example: "Forbidden"
+        404:
+          description: Pedido não encontrado
+          content:
+            application/json:
+              example: "Not Found :("
+      security:
+        - auth: []
+  /admin/users:
+    get:
+      tags:
+        - admin
+      summary: Recupera todos os usuários
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/usuarios"
+      security:
+        - auth: []
+    post:
+      tags:
+        - admin
+      summary: Cadastra novo usuário
+      description: Apenas admin pode ter acesso a esse endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/usuarioInsercao"
+      responses:
+        201: 
+          description: Usuário criado com sucesso
+          content:
+           application/json:
+            schema:
+             $ref: "#/components/schemas/usuarioResposta"
+        401:
+          description: Acesso Negado
+          content:
+            application/json:
+              example: "Unauthorized"
+      security:
+        - auth: []
+  /admin/users/{id}:
+    parameters: 
+    - name: id
+      in: path
+      schema: 
+        type: string
+      required: true
+    put:
+      tags:
+      - admin
+      summary: Altera dados de um determinado usuário
+      responses: 
+        201:
+          description: Sucesso na alteração
+          content:
+            aplication/json:
+              schema: 
+                $ref: '#/components/schemas/usuarioInsercao'
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+      security:
+        - auth: []
+    delete:
+      tags:
+      - admin
+      summary: Exclui determinado usuário
+      responses: 
+        200:
+          description: Excluído com sucesso
+          content:
+            aplication/json:
+              example: "Deleted"
+        401:
+          description: Acesso Negado
+          content: 
+            aplication/json:
+              example: "Unauthorized"
+        404:
+          description: Página não encontrada
+          content:
+            application/json:
+              example: "Not Found :("
+      security:
+        - auth: []
+components:
+  schemas:
+    usuarioInsercao:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        endereco:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+    usuarioResposta:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+        cpf:
+          type: string
+        telefone:
+          type: string
+        endereco:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+    usuarios:
+      type: array
+      items:
+        $ref: "#/components/schemas/usuarioResposta"
+    itemPedido:
+      type: object
+      properties:
+        idProduto:
+          type: string
+        quantidade:
+          type: integer
+        desconto:
+          type: number
+        precoUnitario:
+          type: number
+    pedidoInsercao:
+      type: object
+      properties:
+        idCliente:
+          type: string
+        enderecoEntrega:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+        itensPedido:
+          type: array
+          items: 
+            $ref: "#/components/schemas/itemPedido"
+    pedidoResposta:
+      type: object
+      properties:
+        id:
+          type: string
+        dataPedido:
+          type: string
+        cliente:
+          type: object
+          properties:
+            idCliente:
+              type: string
+            nome:
+              type: string
+        enderecoEntrega:
+          type: object
+          properties:
+            logradouro:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            cep:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+        itensPedido:
+          type: array
+          items: 
+            $ref: "#/components/schemas/itemPedido"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
