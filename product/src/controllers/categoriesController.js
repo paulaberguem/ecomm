@@ -21,21 +21,30 @@ class CategoryController {
   }
 
   static insertCategory = (req, res) => {
-    const category = new categories(req.body);
+    // const category = new categories(req.body);
 
-    categories.findOne(category.nome, (err, categories) => {
-      if(!err) {
-        category.save((err) => {
-          if(err) {
-            res.status(500).send({message: `${err.message} - falha ao cadastrar categoria`})
-          } else {
-            res.status(201).send(category.toJSON())
-          }
-        })
+    // categories.findOne(category.nome, (err, categories) => {
+    //   if(!err) {
+    //     category.save((err) => {
+    //       if(err) {
+    //         res.status(500).send({message: `${err.message} - falha ao cadastrar categoria`})
+    //       } else {
+    //         res.status(201).send(category.toJSON())
+    //       }
+    //     })
+    //   } else {
+    //     res.status(500).send({message: `${err.message} - categoria já cadastrada`})
+    //   }
+    // })
+    let category = new categories(req.body);
+
+    category.save((err) => {
+      if(err) {
+        res.status(400).send({ message: err.message });
       } else {
-        res.status(500).send({message: `${err.message} - categoria já cadastrada`})
+        res.status(201).send(category.toJSON());
       }
-    })
+    });
   }
 
   static updateCategory = (req, res) => {
