@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    id: {type: String},
     nome: 
       { type: String,
         minLength: 3,
@@ -11,7 +12,7 @@ const productSchema = new mongoose.Schema(
     descricao: {type: String, required: true},
     slug: 
         { type: String,
-          match: /[a-zA-Z0-9-]*/gm,
+          match: /^[a-zA-Z0-9-]+$/,
           required: true    
         },
     precoUnico: 
@@ -25,12 +26,12 @@ const productSchema = new mongoose.Schema(
           max: 10000,
           required: true
         },
-    // categoria: 
-    //     { type: mongoose.Schema.Types.ObjectId,
-    //       ref: 'categories',
-    //       required: true
-    //     },
-    categoria: {type: String}
+    categoria: 
+        { type: mongoose.Schema.Types.ObjectId,
+          ref: 'categories',
+          required: true
+        },
+    //categoria: {type: String}
   }
 );
 
