@@ -4,24 +4,28 @@ const productSchema = new mongoose.Schema(
   {
     id: {type: String},
     nome: 
-      { type: String,
+      { 
+        type: String,
         minLength: 3,
         match: /^[a-zA-Z][a-zA-Z0-9]*/gm,
-       required: true
+        required: true
       },
     descricao: {type: String, required: true},
     slug: 
-        { type: String,
+        { 
+          type: String,
           match: /^[a-zA-Z0-9-]+$/,
           required: true    
         },
     precoUnico: 
-        { type: Number, 
+        { 
+          type: Number, 
           min: 0, 
           required: true
         },
     estoque:   
-        { type: Number,
+        { 
+          type: Number,
           min: 0,
           max: 10000,
           required: true
@@ -31,7 +35,6 @@ const productSchema = new mongoose.Schema(
           ref: 'categories',
           required: true
         },
-    //categoria: {type: String}
   }
 );
 
