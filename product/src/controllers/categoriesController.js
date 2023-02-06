@@ -13,30 +13,20 @@ class CategoryController {
 
     categories.findById(id, (err, categories) => {
       if(err) {
-        res.status(500).send({message: `${err.message} - id da categoria não encontrado`})
+        res.status(404).send({message: `${err.message} - id da categoria não encontrado`})
       } else {
         res.status(200).send(categories)
       }
     })
   }
 
-  static insertCategory = (req, res) => {
-    // const category = new categories(req.body);
+  static insertCategory = async (req, res) => {
 
-    // categories.findOne(category.nome, (err, categories) => {
-    //   if(!err) {
-    //     category.save((err) => {
-    //       if(err) {
-    //         res.status(500).send({message: `${err.message} - falha ao cadastrar categoria`})
-    //       } else {
-    //         res.status(201).send(category.toJSON())
-    //       }
-    //     })
-    //   } else {
-    //     res.status(500).send({message: `${err.message} - categoria já cadastrada`})
-    //   }
-    // })
     let category = new categories(req.body);
+
+    const isThereCategory = await categories.findOne({nome: req.body.nome})
+    
+    if (isThereCategory) return res.status(400).send({ message: "Essa categoria já está cadastrada" });
 
     category.save((err) => {
       if(err) {
@@ -47,16 +37,16 @@ class CategoryController {
     });
   }
 
-  static updateCategory = (req, res) => {
+  static updateCategory = async (req, res) => {
     const id = req.params.id;
 
-    categories.findByIdAndUpdate(id, {$set: req.body}, (err) => {
-      if(!err) {
-        res.status(200).send({message: 'Categoria atualizada com sucesso'})
-      } else {
-        res.status(500).send({message: err.message})
-      }
-    })
+    const teste = await categories.findByIdAndUpdate(id, {$set: req.body}, {new: true});
+
+    if(!teste){
+      return res.status(404).send({message: 'Categoria não encontrada'})
+    }
+    res.status(200).send({message: "Categoria atualizada com sucesso"})
+
   }
 
   static deleteCategory = (req, res) => {
@@ -73,7 +63,7 @@ class CategoryController {
 
   static updateStatusCategory = (req, res) => {
     const id = req.params.id;
-    const status = req.body.status;
+    const newStatus = req.body.status;
 
     categories.findByIdAndUpdate(id, { $set: { status: newStatus } }, (err) => {
       if(!err) {
