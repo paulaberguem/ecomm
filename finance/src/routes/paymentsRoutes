@@ -1,0 +1,11 @@
+const { Router } = require('express');
+const PaymentsController = require('../controllers/PaymentsController');
+
+const router = Router();
+
+router.get('/payments', PaymentsController.getPayments)
+router.post('/payments', PaymentsController.insertPayments)
+// router.patch('/payments/:id', validateStatus, PaymentsController.updateStatus)
+
+
+module.exports = router;
