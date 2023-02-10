@@ -6,7 +6,25 @@ class PaymentsController {
         const payment = {...req.body, status: 'CRIADO'};
         try {
             const {id, status} = await database.Payments.create(payment);
-            return res.status(201).location(`/payments/${id}`).json({id, status});
+            const links = [
+                { 
+                    rel: "self",
+                    method: "GET",
+                    href: `https://http://localhost:3002/payments/${id}`
+                },
+                { 
+                    rel: "confirm",
+                    method: "PATCH",
+                    href: `https://http://localhost:3002/payments/${id}/confirm`
+                },
+                { 
+                    rel: "cancel",
+                    method: "PATCH",
+                    href: `https://http://localhost:3002/payments/${id}/cancel`
+                },
+
+            ];
+            return res.status(201).location(`/payments/${id}`).json({id, status, links});
         } catch (error) {
             return res.status(500).json(error.message);
         }
