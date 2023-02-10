@@ -18,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         funcaoValidadora: function(dado){
           if (dado.length < 3) throw new Error('o campo nome deve ter mais de 3 caracteres')
-        },
-        isAlpha: true
+        }
       }
     },
     numeroCartao: {
@@ -46,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn:  [['CRIADO', 'CONFIRMADO', 'CANCELADO']]
       },
-      defaultValue: "CRIADO"
+      //defaultValue: 'CRIADO'
     }
   });
 

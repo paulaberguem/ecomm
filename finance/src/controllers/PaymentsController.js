@@ -3,45 +3,49 @@ const database = require('../models');
 class PaymentsController {
 
     static async insertPayments(req, res){
-        const payment = {...req.body, status: 'CRIADO'}
+        const payment = {...req.body, status: 'CRIADO'};
         try {
-            const {id, status} = await database.Payments.create(payment)
-            return res.status(201).json({id, status})
+            const {id, status} = await database.Payments.create(payment);
+            return res.status(201).location(`/payments/${id}`).json({id, status});
         } catch (error) {
-            return res.status(500).json(error.message)
+            return res.status(500).json(error.message);
         }
     }
 
    static async getPayments(req, res){
     try {
-        const getAllPayments = await database.Payments.findAll()
-        return res.status(200).json(getAllPayments)
+        const getAllPayments = await database.Payments.findAll();
+        return res.status(200).json(getAllPayments);
     } catch (error) {
-        return res.status(500).json(error.message)
+        return res.status(500).json(error.message);
     }
    }
+
    static async getDetailPayment(req, res){
-    const { id } = req.params
     try {
-        const getPaymentByID = await database.Payments.findOne({
-            where: {
-                id: Number(id)
-            }
-        })
+        const {...dataPayments} = req.payment;
+        const {cvv: _, ...datas} = dataPayments.dataValues;
 
-        if(!getPaymentByID){
-            return res.status(200).json({message: 'usuário não encontrado'})    
-        }
-
-        const {...dataPayments} = getPaymentByID
-        const {cvv: _, ...datas} = dataPayments.dataValues
-
-        return res.status(201).json(datas)
+        return res.status(201).json(datas);
     } catch (error) {
-        return res.status(500).json(error.message)
+        return res.status(500).json(error.message);
     }
    }
-   
+
+   static async updateStatusPayment(req, res){
+    const { id } = req.params;
+    const status = req.body;
+    try {
+
+        await database.Payments.update(status, {where: {id: Number(id)}});
+        const updatedStatus = await database.Payments.findOne({where: {id: Number(id)}});
+        return res.status(201).json({id: updatedStatus.id, status: updatedStatus.status});
+
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+   }
+
 }
 
 module.exports = PaymentsController
