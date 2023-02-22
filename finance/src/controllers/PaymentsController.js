@@ -1,9 +1,10 @@
 const database = require('../models');
+const statusPayment = require('../variables/statusVariables')
 
 class PaymentsController {
 
     static async insertPayments(req, res){
-        const payment = {...req.body, status: 'CRIADO'};
+        const payment = {...req.body, status: statusPayment.created};
         try {
             const {id, status} = await database.Payments.create(payment);
             const links = [
@@ -44,7 +45,7 @@ class PaymentsController {
         const {...dataPayments} = req.payment;
         const {cvv: _, ...datas} = dataPayments.dataValues;
 
-        return res.status(201).json(datas);
+        return res.status(200).json(datas);
     } catch (error) {
         return res.status(500).json(error.message);
     }
@@ -57,7 +58,7 @@ class PaymentsController {
 
         await database.Payments.update(status, {where: {id: Number(id)}});
         const updatedStatus = await database.Payments.findOne({where: {id: Number(id)}});
-        return res.status(201).json({id: updatedStatus.id, status: updatedStatus.status});
+        return res.status(200).json({id: updatedStatus.id, status: updatedStatus.status});
 
     } catch (error) {
         return res.status(500).json(error.message);

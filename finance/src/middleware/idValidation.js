@@ -5,7 +5,7 @@ const verifyID = async (req, res, next) => {
     try {
         const getPaymentByID = await database.Payments.findOne({where: {id: Number(id)}});
 
-        if(!getPaymentByID) return res.status(200).json({message: 'usuário não encontrado'});    
+        if(!getPaymentByID) return res.status(200).json({message: 'pagamento não encontrado'});    
 
         req.payment = getPaymentByID;
         next();
