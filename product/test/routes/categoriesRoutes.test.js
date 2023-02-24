@@ -23,3 +23,27 @@ describe('GET em /categories', () => {
     expect(resposta.body[0].nome).toEqual('informática');
   });
 });
+
+let idResposta;
+describe('POST em /admin/categories', () => {
+  it('Deve cadastrar uma nova categoria', async () => {
+    const resposta = await request(app)
+      .post('/admin/categories')
+      .send({
+        nome: 'flores',
+        status: true,
+      })
+      .expect(201);
+
+    idResposta = resposta.body._id;
+  });
+  it('Deve nao cadastrar se já tiver o mesmo nome cadastrado', async () => {
+    await request(app)
+      .post('/admin/categories')
+      .send({
+        nome: 'flores',
+        status: true,
+      })
+      .expect(400);
+  });
+});
