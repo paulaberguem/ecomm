@@ -21,7 +21,6 @@ class CategoryController {
   }
 
   static insertCategory = async (req, res) => {
-
     let category = new categories(req.body);
 
     const isThereCategory = await categories.findOne({nome: req.body.nome})
@@ -40,9 +39,9 @@ class CategoryController {
   static updateCategory = async (req, res) => {
     const id = req.params.id;
 
-    const teste = await categories.findByIdAndUpdate(id, {$set: req.body}, {new: true});
+    const isThereCategory = await categories.findByIdAndUpdate(id, {$set: req.body}, {new: true});
 
-    if(!teste){
+    if(!isThereCategory){
       return res.status(404).send({message: 'Categoria não encontrada'})
     }
     res.status(200).send({message: "Categoria atualizada com sucesso"})
@@ -54,7 +53,7 @@ class CategoryController {
 
     categories.findByIdAndDelete(id, (err) => {
       if(!err){
-        res.status(200).send({message: 'Categoria removida com sucesso'})
+        res.status(204).send({message: 'Categoria removida com sucesso'})
       } else {
         res.status(500).send({message: err.message})
       }
