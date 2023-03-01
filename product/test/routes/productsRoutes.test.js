@@ -1,5 +1,7 @@
 import request from 'supertest';
-import { describe, expect, it, jest, } from '@jest/globals';
+import {
+  describe, expect, it, jest,
+} from '@jest/globals';
 import app from '../../src/app.js';
 
 let server;
@@ -30,12 +32,12 @@ describe('POST em /admin/products', () => {
     const resposta = await request(app)
       .post('/admin/products')
       .send({
-        nome: "cacto",
-        descricao: "planta do tipo suculenta",
-        slug: "cacto",
+        nome: 'cacto',
+        descricao: 'planta do tipo suculenta',
+        slug: 'cacto',
         precoUnico: 100,
         estoque: 10,
-        categoria: "63e10684ddcac76b4e30ecd0"
+        categoria: '63e10684ddcac76b4e30ecd0',
       })
       .expect(201);
 
@@ -44,37 +46,36 @@ describe('POST em /admin/products', () => {
 });
 
 describe('GET em /products/id', () => {
-    it('Deve retornar recurso selecionado', async () => {
-      await request(app)
-        .get(`/products/${idResposta}`)
-        .expect(200);
-    });
+  it('Deve retornar recurso selecionado', async () => {
+    await request(app)
+      .get(`/products/${idResposta}`)
+      .expect(200);
+  });
 });
 
 describe('PUT em /products/id', () => {
-    test.each([
-      ['nome', { nome: 'tenis nike experience azul' }],
-      ['descricao', { descricao: "tenis azul" }],
-      ['slug', { slug: 'tenis-nike-azul' }],
-      ['precoUnico', { precoUnico: 200 }],
-      ['estoque', { estoque: 20 }],
-      ['categoria', { categoria: "63e3a6233cd679f01f70f043" }],
-    ])('Deve alterar o campo %s', async (chave, param) => {
-      const requisicao = { request };
-      const spy = jest.spyOn(requisicao, 'request');
-      await requisicao.request(app)
-        .put(`/admin/products/${idResposta}`)
-        .send(param)
-        .expect(200);
-  
-      expect(spy).toHaveBeenCalled();
-    });
+  test.each([
+    ['nome', { nome: 'tenis nike experience azul' }],
+    ['descricao', { descricao: 'tenis azul' }],
+    ['slug', { slug: 'tenis-nike-azul' }],
+    ['precoUnico', { precoUnico: 200 }],
+    ['estoque', { estoque: 20 }],
+    ['categoria', { categoria: '63e3a6233cd679f01f70f043' }],
+  ])('Deve alterar o campo %s', async (chave, param) => {
+    const requisicao = { request };
+    const spy = jest.spyOn(requisicao, 'request');
+    await requisicao.request(app)
+      .put(`/admin/products/${idResposta}`)
+      .send(param)
+      .expect(200);
+    expect(spy).toHaveBeenCalled();
   });
-  
+});
+
 describe('DELETE em /products/id', () => {
-    it('Deletar o recurso adicionado', async () => {
-      await request(app)
-        .delete(`/admin/products/${idResposta}`)
-        .expect(204);
-    });
+  it('Deletar o recurso adicionado', async () => {
+    await request(app)
+      .delete(`/admin/products/${idResposta}`)
+      .expect(204);
+  });
 });
