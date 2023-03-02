@@ -25,9 +25,10 @@ class UserController {
 
     user.save((err) => {
       if(err) {
-        res.status(400).send({ message: err.message });
+        res.status(500).send({ message: err.message });
       } else {
-        res.status(201).send(user.toJSON());
+        //res.status(201).send(user.toJSON());
+        res.status(201).send(user);
       }
     });
   }
