@@ -48,7 +48,7 @@ describe('POST /admin/users', () => {
       .expect('content-type', /json/)
       .expect(201);
 
-      idResposta = response.body._id;
+    idResposta = response.body._id;
   });
 });
 
@@ -67,12 +67,12 @@ describe('PUT em /admin/users/:id', () => {
     ['senha', { senha: 'baleia55#' }],
     ['cpf', { cpf: '12345698779' }],
     ['telefone', { telefone: '7955552222' }],
-    ['logradouro', { endereco : {logradouro: 'Rua Chile' }}],
-    ['numero', { endereco : {numero: '600' }}],
-    ['complemento', { endereco : {complemento: 'casa vermelha' }}],
-    ['cep', { endereco : {cep: '40555101' }}],
-    ['cidade', { endereco : {cidade: 'Recife' }}],
-    ['uf', { endereco : {uf: 'PE' }}],
+    ['logradouro', { endereco: { logradouro: 'Rua Chile' } }],
+    ['numero', { endereco: { numero: '600' } }],
+    ['complemento', { endereco: { complemento: 'casa vermelha' } }],
+    ['cep', { endereco: { cep: '40555101' } }],
+    ['cidade', { endereco: { cidade: 'Recife' } }],
+    ['uf', { endereco: { uf: 'PE' } }],
   ])('Deve alterar o campo %s', async (chave, param) => {
     const requisicao = { request };
     const spy = jest.spyOn(requisicao, 'request');
