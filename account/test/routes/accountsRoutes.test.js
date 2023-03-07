@@ -1,17 +1,16 @@
 import request from 'supertest';
 import {
-  describe, expect, it, jest,
+  describe, expect, it, jest, afterAll, beforeAll,
 } from '@jest/globals';
+import mongoose from 'mongoose';
 import app from '../../src/app.js';
 
-let server;
-beforeEach(() => {
-  const port = 3004;
-  server = app.listen(port);
+beforeAll(async () => {
+  await mongoose.connect('mongodb://admin:secret@localhost:27017/ecomm-account-test?authSource=admin');
 });
 
-afterEach(() => {
-  server.close();
+afterAll(async () => {
+  await mongoose.connection.close();
 });
 
 describe('GET /admin/users', () => {
