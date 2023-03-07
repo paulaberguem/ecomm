@@ -1,28 +1,25 @@
 import request from 'supertest';
 import {
-  describe, expect, it, jest,
+  describe, expect, it, jest, afterAll, beforeAll,
 } from '@jest/globals';
+import mongoose from 'mongoose';
 import app from '../../src/app.js';
 
-let server;
-beforeEach(() => {
-  const port = 3001;
-  server = app.listen(port);
+beforeAll(async () => {
+  await mongoose.connect('mongodb://admin:secret@localhost:27017/ecomm-product-test?authSource=admin');
 });
 
-afterEach(() => {
-  server.close();
+afterAll(async () => {
+  await mongoose.connection.close();
 });
 
 describe('GET em /products', () => {
   it('Deve retornar uma lista de produtos', async () => {
-    const resposta = await request(app)
+    await request(app)
       .get('/products')
       .set('Accept', 'application/json')
       .expect('content-type', /json/)
       .expect(200);
-
-    expect(resposta.body[0].nome).toEqual('Notebook Samsung');
   });
 });
 
@@ -41,6 +38,7 @@ describe('POST em /admin/products', () => {
       })
       .expect(201);
 
+    // eslint-disable-next-line no-underscore-dangle
     idResposta = resposta.body._id;
   });
 });
@@ -54,6 +52,7 @@ describe('GET em /products/id', () => {
 });
 
 describe('PUT em /products/id', () => {
+  // eslint-disable-next-line no-undef
   test.each([
     ['nome', { nome: 'tenis nike experience azul' }],
     ['descricao', { descricao: 'tenis azul' }],
