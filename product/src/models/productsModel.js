@@ -1,41 +1,42 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
-    id: {type: String},
-    nome: 
-      { 
+    id: { type: String },
+    nome:
+      {
         type: String,
         minLength: 3,
         match: /^[a-zA-Z][a-zA-Z0-9]*/gm,
-        required: true
+        required: true,
       },
-    descricao: {type: String, required: true},
-    slug: 
-        { 
+    descricao: { type: String, required: true },
+    slug:
+        {
           type: String,
           match: /^[a-zA-Z0-9-]+$/,
-          required: true    
+          required: true,
         },
-    precoUnico: 
-        { 
-          type: Number, 
-          min: 0, 
-          required: true
+    precoUnico:
+        {
+          type: Number,
+          min: 0,
+          required: true,
         },
-    estoque:   
-        { 
+    estoque:
+        {
           type: Number,
           min: 0,
           max: 10000,
-          required: true
+          required: true,
         },
-    categoria: 
-        { type: mongoose.Schema.Types.ObjectId,
+    categoria:
+        {
+          type: mongoose.Schema.Types.ObjectId,
           ref: 'categories',
-          required: true
+          required: true,
         },
-  }
+  },
 );
 
 const products = mongoose.model('products', productSchema);

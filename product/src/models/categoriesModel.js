@@ -1,16 +1,17 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const categorySchema = new mongoose.Schema(
   {
-    id: {type: String},
-    nome: 
-      { type: String,
+    id: { type: String },
+    nome:
+      {
+        type: String,
         minLength: 3,
         match: /^[a-zA-Z][a-zA-Z0-9]*/,
-       required: true
+        required: true,
       },
-    status: {type: Boolean}
-  }
+    status: { type: Boolean },
+  },
 );
 
 const categories = mongoose.model('categories', categorySchema);
