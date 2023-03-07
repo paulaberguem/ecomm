@@ -47,6 +47,7 @@ describe('POST /admin/users', () => {
       .expect('content-type', /json/)
       .expect(201);
 
+    // eslint-disable-next-line no-underscore-dangle
     idResposta = response.body._id;
   });
 });
@@ -60,6 +61,7 @@ describe('GET /users/:id', () => {
 });
 
 describe('PUT em /admin/users/:id', () => {
+  // eslint-disable-next-line no-undef
   test.each([
     ['nome', { nome: 'Sansa Stark Red' }],
     ['email', { email: 'sansa_stark@email.com' }],
