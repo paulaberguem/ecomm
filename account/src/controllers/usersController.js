@@ -1,62 +1,61 @@
-import users from '../models/usersModel.js'
+import users from '../models/usersModel.js';
 
 class UserController {
-
   static getUsers = (req, res) => {
+    // eslint-disable-next-line array-callback-return
     users.find((err, user) => {
-        res.status(200).json(user)
-    })
-  }
+      res.status(200).json(user);
+    });
+  };
 
   static getUserById = (req, res) => {
-    const id = req.params.id;
-
-   users.findById(id, (err, users) => {
-      if(err) {
-        res.status(500).send({message: `${err.message} - id do usuário não encontrado`})
+    const { id } = req.params;
+    // eslint-disable-next-line no-shadow
+    users.findById(id, (err, users) => {
+      if (err) {
+        res.status(500).send({ message: `${err.message} - id do usuário não encontrado` });
       } else {
-        res.status(200).send(users)
+        res.status(200).send(users);
       }
-    })
-  }
+    });
+  };
 
   static insertUser = (req, res) => {
-    let user = new users(req.body);
+    // eslint-disable-next-line new-cap
+    const user = new users(req.body);
 
     user.save((err) => {
-      if(err) {
+      if (err) {
         res.status(500).send({ message: err.message });
       } else {
-        //res.status(201).send(user.toJSON());
         res.status(201).send(user);
       }
     });
-  }
+  };
 
   static updateUser = (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
 
-    users.findByIdAndUpdate(id, {$set: req.body}, (err) => {
-      if(!err) {
-        res.status(200).send({message: 'Usuário atualizado com sucesso'})
+    users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+      if (!err) {
+        res.status(200).send({ message: 'Usuário atualizado com sucesso' });
       } else {
-        res.status(500).send({message: err.message})
+        res.status(500).send({ message: err.message });
       }
-    })
-  }
+    });
+  };
 
   static deleteUser = (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
 
     users.findByIdAndDelete(id, (err) => {
-      if(!err){
-        res.status(200).send({message: 'Usuário removido com sucesso'})
+      if (!err) {
+        res.status(200).send({ message: 'Usuário removido com sucesso' });
       } else {
-        res.status(500).send({message: err.message})
+        res.status(500).send({ message: err.message });
       }
-    })
-  }
-
+    });
+  };
 }
 
-export default UserController
+export default UserController;
