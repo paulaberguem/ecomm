@@ -1,13 +1,15 @@
 import express from 'express';
 import UserController from '../controllers/usersController.js';
+import { localMiddlewareAut, bearerMiddlewareAut } from '../utils/middlewareAutenticacaoUser.js';
 
 const router = express.Router();
 
 router
-  .get('/admin/users', UserController.getUsers)
-  .get('/users/:id', UserController.getUserById)
+  .post('/users/login', localMiddlewareAut, UserController.loginUser)
+  .get('/admin/users', bearerMiddlewareAut, UserController.getUsers)
+  .get('/users/:id', bearerMiddlewareAut, UserController.getUserById)
   .post('/admin/users', UserController.insertUser)
-  .put('/admin/users/:id', UserController.updateUser)
-  .delete('/admin/users/:id', UserController.deleteUser);
+  .put('/admin/users/:id', bearerMiddlewareAut, UserController.updateUser)
+  .delete('/admin/users/:id', bearerMiddlewareAut, UserController.deleteUser);
 
 export default router;

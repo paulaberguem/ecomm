@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema(
     senha:
         {
           type: String,
-          match: /^(?=.*\d)(?=.*[a-z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,15}$/,
           required: true,
         },
     dataCriacaoUsuario: { type: Date, default: Date.now },

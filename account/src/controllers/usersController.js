@@ -1,4 +1,6 @@
 import users from '../models/usersModel.js';
+import Hash from '../utils/hash.js';
+import createToken from '../utils/token.js';
 
 class UserController {
   static getUsers = (req, res) => {
@@ -20,9 +22,13 @@ class UserController {
     });
   };
 
-  static insertUser = (req, res) => {
+  static insertUser = async (req, res) => {
+    const senhaHash = await Hash.encrypt(req.body.senha);
+    req.body.senha = senhaHash;
+    console.log(senhaHash);
     // eslint-disable-next-line new-cap
-    const user = new users(req.body);
+    const user = new users({ ...req.body });
+    console.log(user.senha);
 
     user.save((err) => {
       if (err) {
@@ -55,6 +61,12 @@ class UserController {
         res.status(500).send({ message: err.message });
       }
     });
+  };
+
+  static loginUser = (req, res) => {
+    const token = createToken(req.user);
+    res.set('Authorization', token);
+    res.status(204).send();
   };
 }
 
