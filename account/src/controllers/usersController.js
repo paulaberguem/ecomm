@@ -1,23 +1,27 @@
-import users from '../models/usersModel.js';
+import Users from '../models/usersModel.js';
 import Hash from '../utils/hash.js';
 import createToken from '../utils/token.js';
 
 class UserController {
   static getUsers = (req, res) => {
     // eslint-disable-next-line array-callback-return
-    users.find((err, user) => {
-      res.status(200).json(user);
+    Users.find((err, users) => {
+      if (!err) {
+        res.status(200).json(users);
+      } else {
+        res.status(404).send({ message: `${err.message} - usuários não encontrados` });
+      }
     });
   };
 
   static getUserById = (req, res) => {
     const { id } = req.params;
     // eslint-disable-next-line no-shadow
-    users.findById(id, (err, users) => {
-      if (err) {
-        res.status(500).send({ message: `${err.message} - id do usuário não encontrado` });
+    Users.findById(id, (err, user) => {
+      if (!err) {
+        res.status(200).send(user);
       } else {
-        res.status(200).send(users);
+        res.status(404).send({ message: `${err.message} - id do usuário não encontrado` });
       }
     });
   };
@@ -25,16 +29,12 @@ class UserController {
   static insertUser = async (req, res) => {
     const senhaHash = await Hash.encrypt(req.body.senha);
     req.body.senha = senhaHash;
-    console.log(senhaHash);
-    // eslint-disable-next-line new-cap
-    const user = new users({ ...req.body });
-    console.log(user.senha);
-
+    const user = new Users({ ...req.body });
     user.save((err) => {
-      if (err) {
-        res.status(500).send({ message: err.message });
-      } else {
+      if (!err) {
         res.status(201).send(user);
+      } else {
+        res.status(500).send({ message: err.message });
       }
     });
   };
@@ -42,9 +42,9 @@ class UserController {
   static updateUser = (req, res) => {
     const { id } = req.params;
 
-    users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+    Users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
       if (!err) {
-        res.status(200).send({ message: 'Usuário atualizado com sucesso' });
+        res.status(200).send({ message: 'usuário atualizado com sucesso' });
       } else {
         res.status(500).send({ message: err.message });
       }
@@ -54,9 +54,9 @@ class UserController {
   static deleteUser = (req, res) => {
     const { id } = req.params;
 
-    users.findByIdAndDelete(id, (err) => {
+    Users.findByIdAndDelete(id, (err) => {
       if (!err) {
-        res.status(200).send({ message: 'Usuário removido com sucesso' });
+        res.status(200).send({ message: 'usuário removido com sucesso' });
       } else {
         res.status(500).send({ message: err.message });
       }
