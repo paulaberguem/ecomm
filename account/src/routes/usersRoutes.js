@@ -1,6 +1,6 @@
 import express from 'express';
 import UserController from '../controllers/usersController.js';
-import { localMiddlewareAut, bearerMiddlewareAut } from '../utils/middlewareAutenticacaoUser.js';
+import { localMiddlewareAut, bearerMiddlewareAut } from '../authorization/middlewareAutenticacaoUser.js';
 
 const router = express.Router();
 
