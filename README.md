@@ -20,9 +20,9 @@ ________________________________
 Essa aplicação segue muitos dos fatores desta metodologia, segue abaixo um resumo de cada fator e como está sendo utilizado.
 
 **I. Base de Código** :white_check_mark:
-Uma base de código com rastreamento utilizando controle de revisão, muitos deploys
+> Uma base de código com rastreamento utilizando controle de revisão, muitos deploys
 
-> O projeto tem o código versionado pelo Git e com repositório do código no GitHub.
+O projeto tem o código versionado pelo Git e com repositório do código no GitHub.
 
 **II. Dependências** :white_check_mark:
 > Declare e isole as dependências
