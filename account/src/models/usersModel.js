@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema(
     senha:
         {
           type: String,
-          match: /^(?=.*\d)(?=.*[a-z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,15}$/,
           required: true,
         },
     dataCriacaoUsuario: { type: Date, default: Date.now },
@@ -61,6 +60,6 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-const users = mongoose.model('users', userSchema);
+const User = mongoose.model('User', userSchema);
 
-export default users;
+export default User;

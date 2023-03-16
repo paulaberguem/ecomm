@@ -1,5 +1,9 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import dotenv from 'dotenv';
 import db from './src/config/dbConnect.js';
 import app from './src/app.js';
+
+dotenv.config();
 
 db.on('error', console.log.bind(console, 'Erro de conexão'));
 db.once('open', () => {

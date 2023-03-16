@@ -1,29 +1,34 @@
-import users from '../models/usersModel.js';
+import User from '../models/usersModel.js';
+import Hash from '../authorization/hash.js';
+import createToken from '../authorization/token.js';
 
 class UserController {
   static getUsers = (req, res) => {
     // eslint-disable-next-line array-callback-return
-    users.find((err, user) => {
-      res.status(200).json(user);
+    User.find((err, users) => {
+      if (err) {
+        res.status(404).send({ message: `${err.message} - usuários não encontrados` });
+      } else {
+        res.status(200).json(users);
+      }
     });
   };
 
   static getUserById = (req, res) => {
     const { id } = req.params;
-    // eslint-disable-next-line no-shadow
-    users.findById(id, (err, users) => {
+    User.findById(id, (err, user) => {
       if (err) {
-        res.status(500).send({ message: `${err.message} - id do usuário não encontrado` });
+        res.status(404).send({ message: `${err.message} - id do usuário não encontrado` });
       } else {
-        res.status(200).send(users);
+        res.status(200).send(user);
       }
     });
   };
 
-  static insertUser = (req, res) => {
-    // eslint-disable-next-line new-cap
-    const user = new users(req.body);
-
+  static insertUser = async (req, res) => {
+    const senhaHash = await Hash.encrypt(req.body.senha);
+    req.body.senha = senhaHash;
+    const user = new User({ ...req.body });
     user.save((err) => {
       if (err) {
         res.status(500).send({ message: err.message });
@@ -36,11 +41,11 @@ class UserController {
   static updateUser = (req, res) => {
     const { id } = req.params;
 
-    users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-      if (!err) {
-        res.status(200).send({ message: 'Usuário atualizado com sucesso' });
-      } else {
+    User.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+      if (err) {
         res.status(500).send({ message: err.message });
+      } else {
+        res.status(200).send({ message: 'usuário atualizado com sucesso' });
       }
     });
   };
@@ -48,13 +53,19 @@ class UserController {
   static deleteUser = (req, res) => {
     const { id } = req.params;
 
-    users.findByIdAndDelete(id, (err) => {
-      if (!err) {
-        res.status(200).send({ message: 'Usuário removido com sucesso' });
-      } else {
+    User.findByIdAndDelete(id, (err) => {
+      if (err) {
         res.status(500).send({ message: err.message });
+      } else {
+        res.status(200).send({ message: 'usuário removido com sucesso' });
       }
     });
+  };
+
+  static loginUser = (req, res) => {
+    const token = createToken(req.user);
+    res.set('Authorization', token);
+    res.status(204).send();
   };
 }
 
