@@ -40,6 +40,10 @@ O projeto utiliza, através da lib dotenv, os arquivos .env em cada serviço par
 O projeto utiliza esse fator, uma vez que as conexões de serviço de apoio não devem ser feitas pelo próprio aplicativo, podendo alternar um banco de dados com uma URL simples. Isso é possível pois é usado a ORM mongoose.
 
 **V. Construa, lance, execute** :white_check_mark:
+<<<<<<< HEAD
+=======
+
+>>>>>>> c500292ff32545a29b7d40e23374e6b5642b867c
 > Separe estritamente os builds e execute em estágios
 
 O projeto utiliza o Docker para garantir esse fator. O Docker abrange o build, release e execute da aplicação de forma consistente.
@@ -56,7 +60,10 @@ O projeto utiliza esse fator pois todas as portas estão vinculadas explicitamen
 
 **VIII. Concorrência** :white_check_mark:
 > Dimensione por um modelo de processo
+<<<<<<< HEAD
 
+=======
+>>>>>>> c500292ff32545a29b7d40e23374e6b5642b867c
 
 O projeto utiliza esse fator pois segue o fator de processos e é um proejto possivelmente escalável.
 
@@ -67,13 +74,19 @@ O projeto utiliza esse fator ao implementar a possibilidade de inicialização e
 
 **X. Dev/prod semelhantes** :white_check_mark:
 > Mantenha o desenvolvimento, teste, produção o mais semelhante possível
+<<<<<<< HEAD
 
+=======
+>>>>>>> c500292ff32545a29b7d40e23374e6b5642b867c
 
-o projeto utiliza esse fator, uma vez que é usado o mesmo ambiente para desenvolvimento e teste e encaixe do ambiente de produção.
+O projeto utiliza esse fator, uma vez que é usado o mesmo ambiente para desenvolvimento e teste e encaixe do ambiente de produção.
 
 **XI. Logs** :white_check_mark:
 > Trate logs como fluxo de eventos
+<<<<<<< HEAD
 
+=======
+>>>>>>> c500292ff32545a29b7d40e23374e6b5642b867c
 
 O projeto utiliza esse fator pois os logs são enviados para a saída padrão, o console.
 
