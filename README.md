@@ -92,9 +92,7 @@ Inicialmente o projeto teve seu domínio modelado sem pensar na persistência do
 
 O projeto possui operações requerem interações entre domínios.
 
-- **API Gateway** :white_check_mark:
-
-O projeto conta com um ponto único de entrada para as requisições.
+- **API Gateway** :x:
 
 - **Agregador de processos** :white_check_mark:
   
