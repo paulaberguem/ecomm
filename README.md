@@ -57,7 +57,7 @@ O projeto utiliza esse fator pois todas as portas estão vinculadas explicitamen
 **VIII. Concorrência** :white_check_mark:
 > Dimensione por um modelo de processo
 
-O projeto utiliza esse fator pois segue o fator de processos e é um proejto possivelmente escalável.
+O projeto utiliza esse fator pois segue o fator de processos e é um projeto possivelmente escalável.
 
 **IX. Descartabilidade** :white_check_mark:
 > Maximizar a robustez com inicialização e desligamento rápido
@@ -86,7 +86,7 @@ Essa aplicação utiliza alguns padrões de microserviço, segue abaixo uma pequ
 
 - **Serviços de domínio** :white_check_mark:
 
-Inicialmente o projeto teve seu domínio modelado sem pensar na persistência dos dados, que só foi implementado depois. Além de utilizar API REST nos serviços.
+O projeto separa bem os domínios dos microsserviços: account, order, product e finance. Inicialmente o projeto teve seu domínio modelado sem pensar na persistência dos dados, que só foi implementado depois. Além de utilizar API REST nos serviços.
 
 - **Serviços de negócio** :white_check_mark:
 
@@ -94,9 +94,8 @@ O projeto possui operações requerem interações entre domínios.
 
 - **API Gateway** :x:
 
-- **Agregador de processos** :white_check_mark:
+- **Agregador de processos** :x:
   
-É utilizado em algumas requisições.
 
 - **Edge service** :x:
 
@@ -104,10 +103,36 @@ O projeto possui operações requerem interações entre domínios.
 
 O projeto utiliza múltiplos databases.
 
-- **Eventos assíncronos‌** :white_check_mark:
-  
-O projeto conta com alguns eventos assíncronos.
+- **Eventos assíncronos‌** :x:
 
 - **Agregação de logs** :x:
 
 - **Agregação de métricas** :x:
+
+________________________________
+
+#### Aspectos de Microsserviços
+
+- **Padronização de stacks do serviço** :white_check_mark:
+
+Existem alguns padrões nos microsserviços, tais como a maior parte das stacks utilizadas e o uso do eslint para padronização de código.
+
+- **Solução para service discovery** :white_check_mark:
+  
+Essa solução vem com utilização de todos os serviços por meio de conteiners do Docker, utilizando um DNS. Este gera nomes únicos para cada serviço, permitindo que eles se comuniquem.
+
+- **Aspectos de segurança** :white_check_mark:
+  
+Essa solução se dá através do uso de autenticação e autorização através de tokens JWT e também da criptografia de dados sensíveis, como a senha do usuário.
+
+- **Tecnologias para deploy e build** :white_check_mark:
+  
+O Docker é utilizado para fazer o build e deploy nesse projeto.
+
+- **Lidar com tolerância a falhas em aplicações síncronas** :x:
+  
+Esse aspecto ainda não foi implementado no projeto, mas uma forma de trabalhar com essq questão é utilizar circuit breaker.
+
+- **Uso de comunicação assíncrona** :x:
+  
+Neste projeto, apesar da necessidade, ainda não foi implementada a comunicação assíncrona.
